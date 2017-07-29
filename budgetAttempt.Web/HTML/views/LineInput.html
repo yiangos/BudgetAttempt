@@ -1,0 +1,55 @@
+﻿<form name="linefrm" novalidate ng-submit="linefrm.$valid">
+    <ul>
+        <li ng-class="{error: linefrm.lperson.$invalid && !linefrm.lperson.$pristine}">
+            <select ng-model="line.Person" name="lperson" required>
+                <option value="">επιλογή</option>
+                <option ng-repeat="person in persons" ng-value="person">{{person.FirstName}}</option>
+            </select>
+            <span ng-show="linefrm.lperson.$error.required && !linefrm.lperson.$pristine">Required</span>
+        </li>
+        <li ng-class="{error: linefrm.ltype.$invalid && !linefrm.ltype.$pristine}">
+            <select ng-model="line.TransactionType" name="ltype" required ng-change="line.Category='';">
+                <option value="">Είδος</option>
+                <option value="Income">Έσοδα</option>
+                <option value="Expense">Έξοδα</option>
+            </select>
+            <span ng-show="linefrm.ltype.$error.required && !linefrm.ltype.$pristine">Required</span>
+        </li>
+        <li ng-class="{error: linefrm.lcategory.$invalid && !linefrm.lcategory.$pristine}">
+            <select ng-model="line.Category" name="lcategory" required>
+                <option value="">Κατηγορία</option>
+                <option ng-repeat="cat in categories" ng-value="cat" ng-if="cat.TransactionType==line.TransactionType">{{cat.Description}}</option>
+            </select>
+            <span ng-show="linefrm.lcategory.$error.required && !linefrm.lcategory.$pristine">Required</span>
+        </li>
+        <li ng-class="{error: linefrm.ldate.$invalid && !linefrm.ldate.$pristine}">
+            <input type="text"
+                   name="ldate"
+                   ng-model="linedate"
+                   required
+                   ng-model-options="{ updateOn: 'blur' }"
+                   moment-picker="linedate"
+                   placeholder="ηη/μμ/εεεε"
+                   start-date="StartDate"
+                   locale="el"
+                   format="DD/MM/YYYY"
+                   start-view="month"
+                   min-view="year"
+                   max-view="day"
+                   max-date="MaxDate"
+                   min-date="MinDate"
+                   change="onDateChange(newValue, oldValue)" />
+            <span ng-show="linefrm.ldate.$error.required && !linefrm.$pristine">Required</span>
+            <span ng-show="linefrm.ldate.$error.localizedformat && !linefrm.ldate.$pristine">invalid date</span>
+        </li>
+        <li ng-class="{error: linefrm.lamount.$invalid && !linefrm.lamount.$pristine}">
+            <input type="text" name="lamount" ng-model="line.Amount" required price mantiss="2" />
+        </li>
+        <li ng-class="{error: linefrm.lamount.$invalid && !linefrm.$pristine}">
+            <input type="text" ng-model="line.Comment" required />
+        </li>
+        <li ng-class="{error: linefrm.ldescription.$invalid && !linefrm.$pristine}">
+            <input type="submit" ng-click="addLine(line)" ng-disabled="!linefrm.$valid" />
+        </li>
+    </ul>
+</form>
