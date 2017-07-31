@@ -8,17 +8,17 @@
             dec = attrs.decsep || '.';
             mantiss = Number(attrs.mantiss || 2);
             var formatter = function (str, isNum) {
-                if (typeof(str) == "undefined")
+                if (typeof(str) === "undefined")
                 {
                     str = String(Number(0) / (isNum ? 1 : Math.pow(10,mantiss)));
                 }
-                else if (typeof (str) == "number") {
+                else if (typeof (str) === "number") {
                     str = String(str / (isNum ? 1 : Math.pow(10, mantiss)));
                 }
-                else if (typeof(str) == "string") {
+                else if (typeof(str) === "string") {
                     str = String(Number(str.replace(/\./g, "").replace(/\,/g, ".")) / (isNum ? 1 : Math.pow(10, mantiss)));
                 }
-                str = (str == '0' ? '0.0' : str).split('.');
+                str = (str === '0' ? '0.0' : str).split('.');
                 str[1] = str[1] || '0';
                 var retval = str[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.') + ',' + (str[1].length < mantiss ? (str[1] + '0').substring(0, mantiss) : str[1]);
                 return retval;
@@ -37,9 +37,9 @@
                 }
                 sign.has = sign.pos || sign.neg;
                 sign.both = sign.pos && sign.neg;
-
-                if (!val || sign.has && val.length == 1 || ngModel.$modelValue && Number(val) === 0) {
-                    var newVal = (!val || ngModel.$modelValue && Number() === 0 ? '' : val);
+                var newVal;
+                if (!val || sign.has && val.length === 1 || ngModel.$modelValue && Number(val) === 0) {
+                    newVal = (!val || ngModel.$modelValue && Number() === 0 ? '' : val);
                     if (ngModel.$modelValue !== newVal)
                         updateView(newVal);
 
@@ -48,7 +48,7 @@
                 else {
                     var valString = String(val || '');
                     var newSign = (sign.both && ngModel.$modelValue >= 0 || !sign.both && sign.neg ? '-' : '');
-                    var newVal = valString.replace(/[^0-9]/g, '');
+                    newVal = valString.replace(/[^0-9]/g, '');
                     var viewVal = newSign + formatter(angular.copy(newVal));
 
                     if (modelString !== valString)
@@ -71,12 +71,6 @@
         }
     };
 }])
-.directive('lineInput', [function () {
-    return {
-        restrict: 'E',
-        templateUrl: 'views/LineInput.html'
-    };
-})
 .controller('budgetcontroller', ['$scope', '$filter', '$window', '$http', function ($scope, $filter, $window, $http) {
     $scope.newline = {};
     $scope.line = {};
@@ -90,9 +84,16 @@
 
     $scope.categories = [];
     $scope.persons = [];
+    $scope.latestTransactions=[];
+    $scope.getLatestTransactions=function(){
+        $http.get("//localhost:64432/Budget.svc/json/transactions/latest").then(function (resp) { $scope.latestTransactions = resp.data; });
+    };
+
+
     $scope.init = function () {
         $http.get("//localhost:64432/Budget.svc/json/persons/all").then(function (resp) { $scope.persons = resp.data; });
         $http.get("//localhost:64432/Budget.svc/json/categories/all").then(function (resp) { $scope.categories = resp.data; });
+        $scope.getLatestTransactions();
     }
     $scope.onDateChange = function (newValue, oldValue) {
         $scope.line.Date = $scope.linedate.format('YYYY-MM-DD');
@@ -114,7 +115,8 @@
                 $scope.line.Date = $scope.linedate.format('YYYY-MM-DD');
                 $scope.line.TransactionType = "";
                 $scope.line.Person = "";
-            });
+                $scope.getLatestTransactions();
+           });
         }
     };
     $scope.init();

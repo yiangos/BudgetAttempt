@@ -21,7 +21,7 @@ namespace BudgetAttempt.API.Resolvers
 
         public Finance.Models.FinanceCategory Resolve(Data.Models.BudgetLine source, Finance.Models.FinanceEntry destination, Finance.Models.FinanceCategory category, ResolutionContext context)
         {
-            return Mapper.Map<Finance.Models.FinanceCategory>(_FinanceRepository.FetchCategory(source.category));
+            return _FinanceRepository.FetchCategory(source.category);
         }
     }
 }

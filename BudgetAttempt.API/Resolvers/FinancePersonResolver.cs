@@ -21,7 +21,7 @@ namespace BudgetAttempt.API.Resolvers
 
         public Finance.Models.Person Resolve(Data.Models.BudgetLine source, Finance.Models.FinanceEntry destination, Finance.Models.Person member, ResolutionContext context)
         {
-            return Mapper.Map<Finance.Models.Person>(_PersonRepository.FetchOne(source.person));
+            return _PersonRepository.FetchOne(source.person);
         }
     }
 }
