@@ -1,0 +1,12 @@
+[
+  {
+    "outputFileName": "Assets/Scripts/main.js",
+    "inputFiles": [
+      "buildAssets/Scripts/Vendor/angular-moment-picker.js",
+      "buildAssets/Scripts/AngularStuff/directives.js",
+      "buildAssets/Scripts/AngularStuff/controllers.js",
+      "buildAssets/Scripts/AngularStuff/apps.js",
+      "buildAssets/Scripts/jQueryStuff/MovieBackdrop.js"
+    ]
+  }
+]

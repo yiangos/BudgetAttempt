@@ -13,12 +13,12 @@ namespace BudgetAttempt.API
     {
 
         [OperationContract]
-        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "json/transactions/latest")]
-        IEnumerable<Models.Transaction> GetLatestTransactionsJson();
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "json/transactions/latest")]
+        IEnumerable<Models.Transaction> GetLatestTransactionsJson(int count);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Xml, ResponseFormat = WebMessageFormat.Xml, UriTemplate = "xml/transactions/latest")]
-        IEnumerable<Models.Transaction> GetLatestTransactionsXml();
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Xml, ResponseFormat = WebMessageFormat.Xml, UriTemplate = "xml/transactions/latest")]
+        IEnumerable<Models.Transaction> GetLatestTransactionsXml(int count);
 
         [OperationContract]
         [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "json/transactions/lastmonth")]

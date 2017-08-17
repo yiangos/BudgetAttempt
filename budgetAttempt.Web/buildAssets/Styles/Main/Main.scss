@@ -1,0 +1,860 @@
+﻿@import "../Bootstrap/bootstrap";
+@import "../FontAwesome/font-awesome";
+
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+$body-bg: #fff;
+
+
+// Shadows
+$shadow-inset: inset 0 2px 2px 0 rgba(0,0,0,.14);
+$shadow-0: 0 0 1px rgba(0, 0, 0, 0);
+$shadow-2: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+$shadow-3: 0 3px 4px 0 rgba(0,0,0,.14),0 3px 3px -2px rgba(0,0,0,.2),0 1px 8px 0 rgba(0,0,0,.12);
+$shadow-4: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);
+$shadow-6: 0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12),0 3px 5px -1px rgba(0,0,0,.2);
+$shadow-8: 0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12),0 5px 5px -3px rgba(0,0,0,.2);
+
+// Font Sizes
+$mf-font-size: 1.5rem !default;
+$mf-active-font-size: $mf-font-size * 0.8 !default;
+$mf-active-top: -$mf-font-size !default;
+
+// Margin & Paddings
+$mf-gap: $mf-font-size * 1.5 !default;
+$mf-spacer: $mf-font-size / 8 !default;
+$mf-fieldset-margin: 0 0 $mf-gap * 2 !default;
+$mf-checkbox-gap: $mf-font-size * 2 !default;
+$mf-checkbox-top: 0 !default;
+$mf-radio-margin: $mf-font-size / -4 !default;
+
+// Colors
+$mf-input-color: #333 !default;
+$mf-border-color: #999 !default;
+$mf-label-color: lighten($mf-border-color, 10%) !default;
+$mf-active-color: darken($mf-border-color, 10%) !default;
+$mf-focus-color: #337ab7 !default;
+$mf-error-color: #d9534f !default;
+
+// Animation
+$mf-transition-speed: 0.28s !default;
+
+
+
+body,
+input,
+select,
+textarea,
+body * {
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+
+    &::after,
+    &::before {
+        box-sizing: border-box;
+    }
+}
+
+
+h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin: 0 0 2em;
+}
+
+
+
+// The Styles for the form
+fieldset {
+    margin: $mf-fieldset-margin;
+    padding: 0;
+    border: none;
+}
+
+.form-radio,
+.field {
+    position: relative;
+    margin-top: ($mf-gap * 1.5);
+    margin-bottom: ($mf-gap * 1.5);
+}
+
+.form-inline {
+    > .field,
+    > .btn {
+        display: inline-block;
+        margin-bottom: 0;
+    }
+}
+
+.form-help {
+    margin-top: $mf-spacer;
+    margin-left: $mf-spacer;
+    color: $mf-label-color;
+    font-size: $mf-active-font-size;
+
+    .checkbox &,
+    .form-radio &,
+    .field & {
+        position: absolute;
+        width: 100%;
+    }
+
+    .checkbox & {
+        position: relative;
+        margin-bottom: $mf-font-size;
+    }
+
+    .form-radio & {
+        padding-top: ($mf-spacer * 2);
+        margin-top: -$mf-font-size;
+    }
+}
+
+.field {
+    // scss-lint:disable QualifyingElement, NestingDepth
+    input {
+        height: ($mf-font-size * 1.9);
+    }
+
+    textarea {
+        resize: none;
+        height:4rem;
+    }
+
+    select {
+        width: 100%;
+        font-size: $mf-font-size;
+        height: ($mf-font-size * 1.6);
+        padding: $mf-spacer $mf-spacer ($mf-spacer / 2);
+        background: none;
+        border: none;
+        line-height: 1.6;
+        box-shadow: none;
+    }
+
+    label {
+        position: absolute;
+        top: ($mf-font-size / 4);
+        pointer-events: none;
+        padding-left: $mf-spacer;
+        z-index: 1;
+        color: $mf-label-color;
+        font-size: $mf-font-size;
+        font-weight: normal;
+        transition: all $mf-transition-speed ease;
+    }
+
+    i {
+        position: relative;
+        border-bottom: ($mf-font-size / 16) solid $mf-border-color;
+        display: block;
+
+        &::before {
+            content: '';
+            height: ($mf-font-size / 8);
+            width: 0;
+            left: 50%;
+            bottom: ($mf-font-size / -16);
+            position: absolute;
+            background: $mf-focus-color;
+            transition: left $mf-transition-speed ease, width $mf-transition-speed ease;
+            z-index: 2;
+        }
+    }
+
+    input,
+    textarea {
+        display: block;
+        background: none;
+        padding: $mf-spacer $mf-spacer ($mf-spacer / 2);
+        font-size: $mf-font-size;
+        border-width: 0;
+        border-color: transparent;
+        line-height: 1.9;
+        width: 100%;
+        color: transparent;
+        transition: all $mf-transition-speed ease;
+        box-shadow: none;
+    }
+
+    input[type="file"] {
+        line-height: 1;
+
+        ~ i {
+            display: none;
+        }
+    }
+
+    select,
+    input:focus,
+    input:valid,
+    input.form-file,
+    input.has-value,
+    textarea:focus,
+    textarea:valid,
+    textarea.form-file,
+    textarea.has-value {
+        color: $mf-input-color;
+
+        ~ label {
+            font-size: $mf-active-font-size;
+            color: $mf-active-color;
+            top: $mf-active-top;
+            left: 0;
+        }
+    }
+
+    select,
+    input,
+    textarea {
+        &:focus {
+            outline: none;
+
+            ~ label {
+                color: $mf-focus-color;
+            }
+
+            ~ i {
+                &::before {
+                    width: 100%;
+                    left: 0;
+                }
+            }
+        }
+    }
+}
+
+// Radio & Checkbox
+.checkbox,
+.form-radio {
+    label {
+        position: relative;
+        cursor: pointer;
+        padding-left: $mf-checkbox-gap;
+        text-align: left;
+        color: $mf-input-color;
+        display: block;
+    }
+
+    input {
+        width: auto;
+        opacity: 0.00000001;
+        position: absolute;
+        left: 0;
+    }
+}
+
+.radio {
+    margin-bottom: $mf-font-size;
+
+    .helper {
+        position: absolute;
+        top: $mf-radio-margin;
+        left: $mf-radio-margin;
+        cursor: pointer;
+        display: block;
+        font-size: $mf-font-size;
+        user-select: none;
+        color: $mf-border-color;
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin: ($mf-spacer * 2);
+            width: $mf-font-size;
+            height: $mf-font-size;
+            transition: transform $mf-transition-speed ease;
+            border-radius: 50%;
+            border: ($mf-font-size / 8) solid currentColor;
+        }
+
+        &::after {
+            transform: scale(0);
+            background-color: $mf-focus-color;
+            border-color: $mf-focus-color;
+        }
+    }
+
+    label:hover .helper {
+        color: $mf-focus-color;
+    }
+    // scss-lint:disable QualifyingElement, NestingDepth
+    input:checked {
+        ~ .helper {
+            &::after {
+                transform: scale(0.5);
+            }
+
+            &::before {
+                color: $mf-focus-color;
+            }
+        }
+    }
+}
+
+.checkbox {
+    // scss-lint:disable QualifyingElement
+    margin-top: ($mf-gap * 2);
+    margin-bottom: $mf-font-size;
+
+    .helper {
+        color: $mf-border-color;
+        position: absolute;
+        top: $mf-checkbox-top;
+        left: 0;
+        width: $mf-font-size;
+        height: $mf-font-size;
+        z-index: 0;
+        border: ($mf-font-size / 8) solid currentColor;
+        border-radius: ($mf-font-size / 16);
+        transition: border-color $mf-transition-speed ease;
+
+        &::before,
+        &::after {
+            position: absolute;
+            height: 0;
+            width: ($mf-font-size * 0.2);
+            background-color: $mf-focus-color;
+            display: block;
+            transform-origin: left top;
+            border-radius: ($mf-font-size / 4);
+            content: '';
+            transition: opacity $mf-transition-speed ease, height 0s linear $mf-transition-speed;
+            opacity: 0;
+        }
+
+        &::before {
+            top: ($mf-font-size * 0.65);
+            left: ($mf-font-size * 0.38);
+            transform: rotate(-135deg);
+            box-shadow: 0 0 0 ($mf-font-size / 16) $body-bg;
+        }
+
+        &::after {
+            top: ($mf-font-size * 0.3);
+            left: 0;
+            transform: rotate(-45deg);
+        }
+    }
+
+    label:hover .helper {
+        color: $mf-focus-color;
+    }
+
+    input:checked {
+        ~ .helper {
+            color: $mf-focus-color;
+
+            &::after,
+            &::before {
+                opacity: 1;
+                transition: height $mf-transition-speed ease;
+            }
+
+            &::after {
+                height: ($mf-font-size / 2);
+            }
+
+            &::before {
+                height: ($mf-font-size * 1.2);
+                transition-delay: $mf-transition-speed;
+            }
+        }
+    }
+}
+
+.radio + .radio,
+.checkbox + .checkbox {
+    margin-top: $mf-font-size;
+}
+
+.error {
+    .legend.legend,
+    &.field label {
+        // Prevent !importantRule
+        color: $mf-error-color;
+    }
+
+    &.field,
+    &.checkbox,
+    &.radio,
+    &.form-radio {
+        .form-help,
+        .helper {
+            color: $mf-error-color;
+        }
+    }
+
+    i {
+        &::before {
+            background: $mf-error-color;
+            left: 0;
+            width: 100%;
+        }
+    }
+}
+
+button {
+    position: relative;
+    background: currentColor;
+    border: 1px solid currentColor;
+    font-size: ($mf-font-size * 1.1);
+    color: lighten($mf-focus-color, 10%);
+    padding: ($mf-gap / 4) ($mf-gap / 2);
+    cursor: pointer;
+    transition: background-color $mf-transition-speed ease, color $mf-transition-speed ease, box-shadow $mf-transition-speed ease;
+    overflow: hidden;
+    box-shadow: $shadow-2;
+
+    &[disabled], &[disabled]:hover, &[disabled]:active {
+        color: lighten($mf-focus-color, 40%);
+        transition: none;
+        box-shadow: $shadow-2;
+
+        &::before {
+            transition: none;
+        }
+    }
+
+    span {
+        color: #fff;
+        position: relative;
+        z-index: 1;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        background: darken($mf-focus-color, 40%);
+        border: 50vh solid darken($mf-focus-color, 20%);
+        width: 30vh;
+        height: 30vh;
+        border-radius: 50%;
+        display: block;
+        top: 50%;
+        left: 50%;
+        z-index: 0;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0);
+    }
+
+    &:hover {
+        color: $mf-focus-color;
+        box-shadow: $shadow-6;
+    }
+
+    &:active,
+    &:focus {
+        &::before {
+            transition: transform ($mf-transition-speed * 4) ease, opacity $mf-transition-speed ease ($mf-transition-speed * 1.3);
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0;
+        }
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &.button-default {
+        color: lighten($brand-primary, 10%);
+
+        &[disabled], &[disabled]:hover, &[disabled]:active {
+            color: lighten($brand-primary, 40%);
+        }
+
+        &::before {
+            background: darken($brand-primary, 40%);
+            border: 50vh solid darken($brand-primary, 20%);
+        }
+
+        &:hover {
+            color: $brand-primary;
+        }
+    }
+
+    &.button-success {
+        color: $brand-success;
+
+        &[disabled], &[disabled]:hover, &[disabled]:active {
+            color: lighten($brand-success, 40%);
+        }
+
+        &::before {
+            background: darken($brand-success, 40%);
+            border: 50vh solid darken($brand-success, 20%);
+        }
+
+        &:hover {
+            color: $brand-success;
+        }
+    }
+
+    &.button-info {
+        color: $brand-info;
+
+        &[disabled], &[disabled]:hover, &[disabled]:active {
+            color: lighten($brand-info, 40%);
+        }
+
+        &::before {
+            background: darken($brand-info, 40%);
+            border: 50vh solid darken($brand-info, 20%);
+        }
+
+        &:hover {
+            color: $brand-info;
+        }
+    }
+
+    &.button-warning {
+        color: $brand-warning;
+
+        &[disabled], &[disabled]:hover, &[disabled]:active {
+            color: lighten($brand-warning, 40%);
+        }
+
+        &::before {
+            background: darken($brand-warning, 40%);
+            border: 50vh solid darken($brand-warning, 20%);
+        }
+
+        &:hover {
+            color: $brand-warning;
+        }
+    }
+
+    &.button-danger {
+        color: $brand-danger;
+
+        &[disabled], &[disabled]:hover, &[disabled]:active {
+            color: lighten($brand-danger, 40%);
+        }
+
+        &::before {
+            background: darken($brand-danger, 40%);
+            border: 50vh solid darken($brand-danger, 20%);
+        }
+
+        &:hover {
+            color: $brand-danger;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+    body {
+        @extend .container;
+        background: linear-gradient(darken($body-bg, 5%), darken($body-bg, 10%));
+        background: #042133 url('http://i.ytimg.com/vi/NZlfxWMr7nc/maxresdefault.jpg') no-repeat center;
+        background-size: cover;
+        padding-top: 7rem;
+    }
+
+    body > main {
+        @extend .row;
+    }
+
+    body > header {
+        @extend .navbar;
+        @extend .navbar-inverse;
+        @extend .navbar-fixed-top;
+        padding-top: 0.75rem;
+        background-color: rgba(4,33,51,0.6);
+    }
+
+    section {
+        @extend .col-lg-4;
+        position: relative;
+        background: $body-bg;
+        border-radius: 1px;
+        min-height: 60rem;
+        margin-bottom: 2.5rem;
+        margin-right: 0.75rem;
+        width: 32.125%;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-shadow: $shadow-8;
+            transform: scale(0.98);
+            transition: transform $mf-transition-speed ease-in-out;
+            z-index: -1;
+        }
+
+        &:hover::before {
+            transform: scale(1);
+        }
+
+        .full-width {
+            @extend .col-lg-12;
+        }
+
+        .column {
+            @extend .col-lg-6;
+        }
+
+        .button-container {
+            @extend .col-lg-12;
+            text-align: center;
+        }
+    }
+
+    #latestTransactionsSection {
+        ul {
+            list-style-type: none;
+        }
+    }
+
+    .lineExpense {
+        @extend .fa-tag;
+        color: darken($brand-warning, 25%);
+    }
+
+    .lineIncome {
+        @extend .fa-money;
+        color: darken($brand-success, 13.5%);
+    }
+
+    .lineExpense, .lineIncome {
+        padding: 1rem 0 0.5rem 0;
+
+        &::before {
+            font-family: 'FontAwesome';
+            float: left;
+            margin-top: 0;
+            margin-left: -3rem;
+        }
+    }
+
+    .lineExpense::before {
+        margin-left: -2.75rem;
+    }
+
+
+
+
+    $backtube-container: ( size: 900, ratio: '16/9', zindex: 1 ) !default;
+
+    $backtube-playbutton: ( zindex: 20, align: right bottom, position: absolute, dimension: 250px, circle: 90px, arrow-margin: -20px 0 0 -12px, arrow-dimensions: 20px 0 20px 35px ) !default;
+
+
+    @mixin backtube-object-cover ($settings) {
+        $ratio: map-get($settings, ratio);
+        $size: map-get($settings, size);
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+
+        @media (min-aspect-ratio: unquote($ratio)) {
+            height: #{$size}vh;
+            top: -#{($size - 100) / 2}vh;
+        }
+
+        @media (max-aspect-ratio: unquote($ratio)) {
+            width: #{$size}vw;
+            left: -#{($size - 100) / 2}vw;
+        }
+    }
+
+    @mixin backtube-position($settings) {
+        $dimension: map-get($settings, dimension);
+        $align: map-get($settings, align);
+
+        width: $dimension;
+        height: $dimension;
+        z-index: map-get($settings, zindex);
+
+        @if index($align, right) {
+            left: auto;
+            margin-right: ($dimension / -2);
+        }
+        @else {
+            right: auto;
+            margin-left: ($dimension / -2);
+        }
+
+        @if index($align, bottom) {
+            top: auto;
+            margin-bottom: ($dimension / -2);
+        }
+        @else {
+            bottom: auto;
+            margin-top: ($dimension / -2);
+        }
+
+        @each $pos in $align {
+            @if index(top right bottom left, $pos) {
+                #{$pos}: $dimension / 2;
+            }
+        }
+
+        @if $align == center {
+            top: 50%;
+            left: 50%;
+        }
+        @else if $align == 'center center' {
+            top: 50%;
+            left: 50%;
+        }
+        @else if index($align, center) {
+            @each $pos in $align {
+                @if index(left right, $pos) {
+                    top: 50%;
+                }
+
+                @if index(top bottom, $pos) {
+                    left: 50%;
+                }
+            }
+        }
+    }
+
+    @mixin backtube-playbutton($settings) {
+        $circle: map-get($settings, circle);
+        $arrow: map-get($settings, arrow);
+
+        @include backtube-position($settings);
+
+        &:before,
+        &:after {
+            content: '';
+            position: absolute;
+            display: block;
+            cursor: pointer;
+            left: 50%;
+            top: 50%;
+            z-index: -1;
+        }
+
+        &:before {
+            margin: ($circle / -2) 0 0 ($circle / -2);
+            height: $circle;
+            width: $circle;
+            border: 3px solid #fff;
+            background: rgba(#000, 0.2);
+            border-radius: $circle;
+            box-shadow: 0 3px 4px 0 rgba(#000, 0.14), 0 3px 3px -2px rgba(#000, 0.2), 0 1px 8px 0 rgba(#000, 0.12);
+            transition: all 0.1s ease;
+        }
+
+        &:active:before {
+            background: rgba(#000, 0.6);
+            box-shadow: 0 0 1px rgba(#000, 0);
+        }
+
+        &:after {
+            margin: map-get($settings, arrow-margin);
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: map-get($settings, arrow-dimensions);
+            border-color: transparent transparent transparent #fff;
+        }
+    }
+
+    .backtube-wrapper {
+        body & {
+            position: relative;
+            z-index: (map-get($backtube-container, zindex) + 2);
+            height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+    }
+
+    .backtube-container {
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: map-get($backtube-container, zindex);
+        opacity: 1;
+        transition: opacity 0.4s ease;
+
+        &.backtube-fade-in {
+            opacity: 0.01;
+            transition-duration: 0s;
+        }
+
+        &.backtube-fade-out {
+            transition-duration: 1s;
+            opacity: 0.01;
+        }
+    }
+
+    div#backtube-player {
+        display: none;
+    }
+
+    #backtube-player {
+        @include backtube-object-cover($backtube-container);
+    }
+
+    .backtube-shield {
+        width: 100vw;
+        height: 100vh;
+        z-index: (map-get($backtube-container, zindex) + 1);
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    body {
+        > .backtube-container,
+        > .backtube-shield {
+            position: fixed;
+            bottom: auto;
+            right: auto;
+            width: 100vw;
+            height: 100vh;
+        }
+    }
+
+    .backtube-playbutton.backtube-init {
+        .backtube-container {
+            @include backtube-playbutton($backtube-playbutton);
+            position: absolute;
+            opacity: 1;
+        }
+
+        > .backtube-container {
+            position: fixed;
+        }
+
+        .backtube-shield {
+            display: none;
+        }
+
+        #backtube-player {
+            opacity: 0.001;
+        }
+    }
+    // If the plugin get's called on body, use different z-indexes
+    .backtube-body {
+        .backtube-container {
+            z-index: -2;
+        }
+
+        .backtube-shield {
+            z-index: -1;
+        }
+    }

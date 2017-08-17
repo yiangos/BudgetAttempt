@@ -1,0 +1,29 @@
+﻿<section id="CategoryFormSection">
+    <h2>ΕΙΣΑΓΩΓΗ ΝΕΑΣ ΚΑΤΗΓΟΡΙΑΣ</h2>
+    <form name="ctgfrm" novalidate ng-submit="ctgfrm.$valid">
+        <div class="field" ng-class="{error: ctgfrm.ltype.$invalid && !ctgfrm.ltype.$pristine}">
+            <select ng-model="cat.TransactionType" name="ltype" required id="categoryType">
+                <option value="">επιλογή</option>
+                <option value="Income">Έσοδα</option>
+                <option value="Expense">Έξοδα</option>
+            </select>
+            <label for="categoryType">
+                Είδος
+                <span ng-show="ctgfrm.ltype.$error.required && !ctgfrm.ltype.$pristine">(Υποχρεωτικό πεδιο)</span>
+            </label><i></i>
+        </div>
+        <div class="field">
+
+        </div>
+        <div class="field" ng-class="{error: ctgfrm.ldescription.$invalid && !ctgfrm.ldescription.$pristine}">
+            <input type="text" name="ldescription" ng-model="cat.Description" required id="catDescription" />
+            <label for="catDescription">
+                Περιγραφή
+                <span ng-show="ctgfrm.ldescription.$error.required && !ctgfrm.ldescription.$pristine">(Υποχρεωτικό πεδιο)</span>
+            </label><i></i>
+        </div>
+        <div class="button-container">
+            <button ng-click="addCategory(cat)" ng-disabled="!ctgfrm.$valid"><span>Εισαγωγή</span></button>
+        </div>
+    </form>
+</section>

@@ -18,12 +18,8 @@ namespace BudgetAttempt.API
 
         public Budget(IFinanceRepository financeRepository, IPersonRepository personRepository)
         {
-            if (financeRepository == null)
-                throw new ArgumentNullException("financeRepository");
-            this._FinanceRepository = financeRepository;
-            if (personRepository == null)
-                throw new ArgumentNullException("personRepository");
-            this._PersonRepository = personRepository;
+            this._FinanceRepository = financeRepository ?? throw new ArgumentNullException("financeRepository");
+            this._PersonRepository = personRepository ?? throw new ArgumentNullException("personRepository");
         }
 
         #region Transactions
@@ -38,19 +34,19 @@ namespace BudgetAttempt.API
             return GetLastMonthTransactions();
         }
 
-        public IEnumerable<Models.Transaction> GetLatestTransactionsJson()
+        public IEnumerable<Models.Transaction> GetLatestTransactionsJson(int count)
         {
-            return GetLatestTransactions();
+            return GetLatestTransactions(count);
         }
 
-        public IEnumerable<Models.Transaction> GetLatestTransactionsXml()
+        public IEnumerable<Models.Transaction> GetLatestTransactionsXml(int count)
         {
-            return GetLatestTransactions();
+            return GetLatestTransactions(count);
         }
 
-        private IEnumerable<Models.Transaction> GetLatestTransactions()
+        private IEnumerable<Models.Transaction> GetLatestTransactions(int count)
         {
-            return Mapper.Map<IEnumerable<Models.Transaction>>(_FinanceRepository.FetchAll(0, 10));
+            return Mapper.Map<IEnumerable<Models.Transaction>>(_FinanceRepository.FetchAll(0, count));
         }
 
         private IEnumerable<Models.Transaction> GetLastMonthTransactions()

@@ -1,0 +1,6 @@
+﻿<section id="latestTransactionsSection">
+    <h2>{{LatestCount}} ΤΕΛΕΥΤΑΙΕΣ ΚΙΝΗΣΕΙΣ</h2>
+    <ul>
+        <li ng-repeat="Transaction in latestTransactions" ng-class="{lineExpense: Transaction.TransactionType=='Expense', lineIncome: Transaction.TransactionType=='Income'}">{{Transaction.Date| date:'dd/MM/yyyy'}} {{Transaction.Category.Description}}  {{Transaction.Amount | currency:'&euro;':2 }} ({{Transaction.Person.FirstName}}) </li>
+    </ul>
+</section>
