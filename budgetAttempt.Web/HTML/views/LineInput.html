@@ -23,7 +23,7 @@
                 </label><i></i>
             </div>
             <div class="field" ng-class="{error: linefrm.lamount.$invalid && !linefrm.lamount.$pristine}">
-                <input type="text" name="lamount" ng-model="line.Amount" required price mantiss="2" id="amount" />
+                <input type="text" name="lamount" ng-model="line.Amount" required price mantiss="2" id="amount" thousep="." decsep="," />
                 <label for="amount">
                     Ποσό
                     <span ng-show="linefrm.lamount.$error.required && !linefrm.lamount.$pristine">(Υποχρεωτικό πεδιο)</span>

@@ -1160,19 +1160,20 @@ var price = function () {
             dec = attrs.decsep || '.';
             mantiss = Number(attrs.mantiss || 2);
             var formatter = function (str, isNum) {
-                if (typeof(str) === "undefined")
-                {
-                    str = String(Number(0) / (isNum ? 1 : Math.pow(10,mantiss)));
+                if (typeof (str) === "undefined") {
+                    str = String(Number(0) / (isNum ? 1 : Math.pow(10, mantiss)));
                 }
                 else if (typeof (str) === "number") {
                     str = String(str / (isNum ? 1 : Math.pow(10, mantiss)));
                 }
-                else if (typeof(str) === "string") {
-                    str = String(Number(str.replace(/\./g, "").replace(/\,/g, ".")) / (isNum ? 1 : Math.pow(10, mantiss)));
+                else if (typeof (str) === "string") {
+                    var rxth = new RegExp("\\" + thou, "g");
+                    var rxdc = new RegExp("\\" + dec, "g");
+                    str = String(Number(str.replace(rxth, "").replace(rxdc, ".")) / (isNum ? 1 : Math.pow(10, mantiss)));
                 }
                 str = (str === '0' ? '0.0' : str).split('.');
                 str[1] = str[1] || '0';
-                var retval = str[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.') + ',' + (str[1].length < mantiss ? (str[1] + '0').substring(0, mantiss) : str[1]);
+                var retval = str[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thou) + dec + (str[1].length < mantiss ? (str[1] + '0').substring(0, mantiss) : str[1]);
                 return retval;
             }
             var updateView = function (val) {
@@ -1213,7 +1214,7 @@ var price = function () {
                 if (val) {
                     var str = String(val).split('.');
                     str[1] = str[1] || '0';
-                    val = str[0] + ',' + (str[1].length <mantiss ? (str[1] + '0').substring(0,mantiss) : str[1]);
+                    val = str[0] + dec + (str[1].length < mantiss ? (str[1] + '0').substring(0, mantiss) : str[1]);
                 }
                 return parseNumber(val);
             }
@@ -1223,7 +1224,7 @@ var price = function () {
         }
     };
 };
-var transactionInput= function () {
+var transactionInput = function () {
     return {
         restrict: 'E', /* restrict this directive to elements */
         templateUrl: "Views/LineInput.html",
