@@ -1160,8 +1160,9 @@ var price = function () {
             dec = attrs.decsep || '.';
             mantiss = Number(attrs.mantiss || 2);
             var formatter = function (str, isNum) {
-                if (typeof (str) === "undefined") {
-                    str = String(Number(0) / (isNum ? 1 : Math.pow(10, mantiss)));
+                if (typeof(str) === "undefined")
+                {
+                    str = String(Number(0) / (isNum ? 1 : Math.pow(10,mantiss)));
                 }
                 else if (typeof (str) === "number") {
                     str = String(str / (isNum ? 1 : Math.pow(10, mantiss)));
@@ -1173,7 +1174,7 @@ var price = function () {
                 }
                 str = (str === '0' ? '0.0' : str).split('.');
                 str[1] = str[1] || '0';
-                var retval = str[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thou) + dec + (str[1].length < mantiss ? (str[1] + '0').substring(0, mantiss) : str[1]);
+                var retval = str[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1'+thou) + dec + (str[1].length < mantiss ? (str[1] + '0').substring(0, mantiss) : str[1]);
                 return retval;
             }
             var updateView = function (val) {
@@ -1214,7 +1215,7 @@ var price = function () {
                 if (val) {
                     var str = String(val).split('.');
                     str[1] = str[1] || '0';
-                    val = str[0] + dec + (str[1].length < mantiss ? (str[1] + '0').substring(0, mantiss) : str[1]);
+                    val = str[0] + dec + (str[1].length <mantiss ? (str[1] + '0').substring(0,mantiss) : str[1]);
                 }
                 return parseNumber(val);
             }
@@ -1224,7 +1225,7 @@ var price = function () {
         }
     };
 };
-var transactionInput = function () {
+var transactionInput= function () {
     return {
         restrict: 'E', /* restrict this directive to elements */
         templateUrl: "Views/LineInput.html",
@@ -1253,10 +1254,11 @@ var categoryInput= function () {
 };
 
 
-function Budget($scope, $filter, $window, $http, baseurl) {
+function Budget($scope, $filter, $window, $http, baseurl, locale) {
     $scope.newline = {};
     $scope.line = {};
     $scope.cat = {};
+    moment.locale(locale);
     $scope.linedate = moment();
     $scope.line.Date = $scope.linedate.format('YYYY-MM-DD');
     $scope.line.TransactionType = "";
@@ -1330,11 +1332,13 @@ else
 {
     budgetApp.value("baseurl", "//"+location.hostname);
 }
+budgetApp.value("locale", "el");
+
 budgetApp.directive('price',price);
 budgetApp.directive('transactionInput',transactionInput);
 budgetApp.directive('transactionLatest',transactionLatest);
 budgetApp.directive('categoryInput',categoryInput);
-budgetApp.controller('budgetcontroller', ['$scope', '$filter', '$window', '$http','baseurl', Budget]);
+budgetApp.controller('budgetcontroller', ['$scope', '$filter', '$window', '$http','baseurl','locale', Budget]);
 
 budgetApp.controller('navigationcontroller', ['$scope', function($scope){}]);
 

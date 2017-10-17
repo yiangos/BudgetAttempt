@@ -1,7 +1,8 @@
-﻿function Budget($scope, $filter, $window, $http, baseurl) {
+﻿function Budget($scope, $filter, $window, $http, baseurl, locale) {
     $scope.newline = {};
     $scope.line = {};
     $scope.cat = {};
+    moment.locale(locale);
     $scope.linedate = moment();
     $scope.line.Date = $scope.linedate.format('YYYY-MM-DD');
     $scope.line.TransactionType = "";

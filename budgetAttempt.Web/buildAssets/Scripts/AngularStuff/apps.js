@@ -7,11 +7,13 @@ else
 {
     budgetApp.value("baseurl", "//"+location.hostname);
 }
+budgetApp.value("locale", "el");
+
 budgetApp.directive('price',price);
 budgetApp.directive('transactionInput',transactionInput);
 budgetApp.directive('transactionLatest',transactionLatest);
 budgetApp.directive('categoryInput',categoryInput);
-budgetApp.controller('budgetcontroller', ['$scope', '$filter', '$window', '$http','baseurl', Budget]);
+budgetApp.controller('budgetcontroller', ['$scope', '$filter', '$window', '$http','baseurl','locale', Budget]);
 
 budgetApp.controller('navigationcontroller', ['$scope', function($scope){}]);
 
