@@ -68,6 +68,15 @@ namespace BudgetAttempt.API
         [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Xml, ResponseFormat = WebMessageFormat.Xml, UriTemplate = "xml/categories/all")]
         IEnumerable<Models.TransactionCategory> GetAllCategoriesXml();
 
+        [OperationContract]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "json/transactions/month")]
+        IEnumerable<Models.Transaction> GetMonthTransactionsJson(string yearmonth);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Xml, ResponseFormat = WebMessageFormat.Xml, UriTemplate = "xml/transactions/month")]
+        IEnumerable<Models.Transaction> GetMonthTransactionsXml(string yearmonth);
+
+
         [WebInvoke(Method = "OPTIONS", UriTemplate = "")]
         void GetOptions();
     }

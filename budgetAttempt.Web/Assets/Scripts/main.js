@@ -1264,11 +1264,11 @@ var monthTransactions = function () {
 };
 
 
-function Budget($scope, $filter, $window, $http, baseurl) {
+function Budget($scope, $filter, $window, $http, baseurl, locale) {
     $scope.newline = {};
     $scope.line = {};
     $scope.cat = {};
-    moment.locale('el');
+    moment.locale(locale);
     $scope.linedate = moment();
     $scope.line.Date = $scope.linedate.format('YYYY-MM-DD');
     $scope.line.TransactionType = "";
@@ -1281,15 +1281,33 @@ function Budget($scope, $filter, $window, $http, baseurl) {
     //Month Flow
     $scope.flowMonth = moment();
     $scope.startFlow = moment();
-    $scope.minFlow = moment().add(-5, 'year');
+    $scope.minFlow = moment().subtract(5, 'year');
     $scope.maxFlow = moment();
-    $scope.onFlowChange = function (newValue, oldValue) {
-        $scope.getMonthTransactions($scope.flowMonth);
-    };
-    $scope.getMonthTransactions = function (month) {
-        var start = moment().year($scope.flowMonth.year()).month($scope.flowMonth.month()).date(1);
-        var end = moment().year($scope.flowMonth.year()).month($scope.flowMonth.month()).date(1).add(1, "M").subtract(1, "d");
-        console.log(start, end);
+    $scope.monthTransactions = [];
+    $scope.monthIncome = 0;
+    $scope.monthExpense = 0;
+    $scope.onFlowChange = function (newValue, oldValue) {$scope.getMonthTransactions();};
+    $scope.getMonthTransactions = function () {
+        $http.post(baseurl + "/Budget.svc/json/transactions/month", $scope.flowMonth.format('YYYY-MM'), { headers: { 'Content-Type': 'application/json', 'content': 'application/json' } }).then(function (resp) {
+            $scope.monthTransactions = resp.data;
+            $scope.monthIncome= resp.data.map(function (x) {
+                if (x.TransactionType == 'Income')
+                {
+                    return x.Amount;
+                }
+                return 0;
+            }).reduce(function (accumulator, currentValue) {
+                return accumulator + currentValue;
+            });
+            $scope.monthExpense = resp.data.map(function (x) {
+                if (x.TransactionType == 'Expense') {
+                    return x.Amount;
+                }
+                return 0;
+            }).reduce(function (accumulator, currentValue) {
+                return accumulator + currentValue;
+            });
+        });
     }
 
 
@@ -1358,12 +1376,14 @@ else
 {
     budgetApp.value("baseurl", "//"+location.hostname);
 }
+budgetApp.value("locale", "el");
+
 budgetApp.directive('price',price);
 budgetApp.directive('transactionInput',transactionInput);
 budgetApp.directive('transactionLatest',transactionLatest);
 budgetApp.directive('categoryInput', categoryInput);
 budgetApp.directive('monthTransactions', monthTransactions);
-budgetApp.controller('budgetcontroller', ['$scope', '$filter', '$window', '$http', 'baseurl', Budget]);
+budgetApp.controller('budgetcontroller', ['$scope', '$filter', '$window', '$http','baseurl','locale', Budget]);
 
 budgetApp.controller('navigationcontroller', ['$scope', function($scope){}]);
 

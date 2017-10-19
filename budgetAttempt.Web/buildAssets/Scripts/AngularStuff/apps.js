@@ -14,7 +14,7 @@ budgetApp.directive('transactionInput',transactionInput);
 budgetApp.directive('transactionLatest',transactionLatest);
 budgetApp.directive('categoryInput', categoryInput);
 budgetApp.directive('monthTransactions', monthTransactions);
-budgetApp.controller('budgetcontroller', ['$scope', '$filter', '$window', '$http','baseurl', Budget]);
+budgetApp.controller('budgetcontroller', ['$scope', '$filter', '$window', '$http','baseurl','locale', Budget]);
 
 budgetApp.controller('navigationcontroller', ['$scope', function($scope){}]);
 

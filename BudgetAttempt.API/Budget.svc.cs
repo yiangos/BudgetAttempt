@@ -69,11 +69,33 @@ namespace BudgetAttempt.API
             return AddTransaction(data);
         }
 
-        public Transaction AddTransaction(Transaction data)
+        private Transaction AddTransaction(Transaction data)
         {
             var t = Mapper.Map<Finance.Models.FinanceEntry>(data);
             t = _FinanceRepository.CreateEntry(t);
             return Mapper.Map<Transaction>(t);
+        }
+
+        public IEnumerable<Models.Transaction> GetMonthTransactionsJson(string yearmonth)
+        {
+            return GetMonthTransactions(yearmonth);
+        }
+
+        public IEnumerable<Models.Transaction> GetMonthTransactionsXml(string yearmonth)
+        {
+            return GetMonthTransactions(yearmonth);
+        }
+
+        private IEnumerable<Models.Transaction> GetMonthTransactions(string yearmonth)
+        {
+            var d= DateTime.ParseExact(yearmonth + "-01", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);
+            var filter = new BudgetAttempt.Finance.Models.Filter()
+            {
+
+                StartDate = d,
+                EndDate =d.AddMonths(1).AddDays(-1),
+            };
+            return Mapper.Map<IEnumerable<Models.Transaction>>(_FinanceRepository.FetchFiltered(filter));
         }
 
         #endregion
