@@ -1160,8 +1160,9 @@ var price = function () {
             dec = attrs.decsep || '.';
             mantiss = Number(attrs.mantiss || 2);
             var formatter = function (str, isNum) {
-                if (typeof (str) === "undefined") {
-                    str = String(Number(0) / (isNum ? 1 : Math.pow(10, mantiss)));
+                if (typeof(str) === "undefined")
+                {
+                    str = String(Number(0) / (isNum ? 1 : Math.pow(10,mantiss)));
                 }
                 else if (typeof (str) === "number") {
                     str = String(str / (isNum ? 1 : Math.pow(10, mantiss)));
@@ -1173,7 +1174,7 @@ var price = function () {
                 }
                 str = (str === '0' ? '0.0' : str).split('.');
                 str[1] = str[1] || '0';
-                var retval = str[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thou) + dec + (str[1].length < mantiss ? (str[1] + '0').substring(0, mantiss) : str[1]);
+                var retval = str[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1'+thou) + dec + (str[1].length < mantiss ? (str[1] + '0').substring(0, mantiss) : str[1]);
                 return retval;
             }
             var updateView = function (val) {
@@ -1214,7 +1215,7 @@ var price = function () {
                 if (val) {
                     var str = String(val).split('.');
                     str[1] = str[1] || '0';
-                    val = str[0] + dec + (str[1].length < mantiss ? (str[1] + '0').substring(0, mantiss) : str[1]);
+                    val = str[0] + dec + (str[1].length <mantiss ? (str[1] + '0').substring(0,mantiss) : str[1]);
                 }
                 return parseNumber(val);
             }
@@ -1224,7 +1225,7 @@ var price = function () {
         }
     };
 };
-var transactionInput = function () {
+var transactionInput= function () {
     return {
         restrict: 'E', /* restrict this directive to elements */
         templateUrl: "Views/LineInput.html",
@@ -1242,10 +1243,20 @@ var transactionLatest= function () {
         }
     };
 };
-var categoryInput= function () {
+var categoryInput = function () {
     return {
         restrict: 'E', /* restrict this directive to elements */
         templateUrl: "Views/CategoryInput.html",
+        link: function (scope, elem, attrs) {
+
+        }
+    };
+};
+
+var monthTransactions = function () {
+    return {
+        restrict: 'E', /* restrict this directive to elements */
+        templateUrl: "Views/MonthTransactions.html",
         link: function (scope, elem, attrs) {
 
         }
@@ -1257,6 +1268,7 @@ function Budget($scope, $filter, $window, $http, baseurl) {
     $scope.newline = {};
     $scope.line = {};
     $scope.cat = {};
+    moment.locale('el');
     $scope.linedate = moment();
     $scope.line.Date = $scope.linedate.format('YYYY-MM-DD');
     $scope.line.TransactionType = "";
@@ -1264,7 +1276,22 @@ function Budget($scope, $filter, $window, $http, baseurl) {
     $scope.StartDate = moment();
     $scope.MinDate = moment().add(-1, 'year');
     $scope.MaxDate = moment();
-    $scope.LatestCount=10;
+    $scope.LatestCount = 10;
+
+    //Month Flow
+    $scope.flowMonth = moment();
+    $scope.startFlow = moment();
+    $scope.minFlow = moment().add(-5, 'year');
+    $scope.maxFlow = moment();
+    $scope.onFlowChange = function (newValue, oldValue) {
+        $scope.getMonthTransactions($scope.flowMonth);
+    };
+    $scope.getMonthTransactions = function (month) {
+        var start = moment().year($scope.flowMonth.year()).month($scope.flowMonth.month()).date(1);
+        var end = moment().year($scope.flowMonth.year()).month($scope.flowMonth.month()).date(1).add(1, "M").subtract(1, "d");
+        console.log(start, end);
+    }
+
 
     $scope.categories = [];
     $scope.persons = [];
@@ -1278,6 +1305,7 @@ function Budget($scope, $filter, $window, $http, baseurl) {
         $http.get(baseurl + "/Budget.svc/json/persons/all").then(function (resp) { $scope.persons = resp.data; });
         $http.get(baseurl + "/Budget.svc/json/categories/all").then(function (resp) { $scope.categories = resp.data; });
         $scope.getLatestTransactions();
+        //$scope.getMonthTransactions($scope.flowMonth);
     }
     $scope.onDateChange = function (newValue, oldValue) {
         $scope.line.Date = $scope.linedate.format('YYYY-MM-DD');
@@ -1333,8 +1361,9 @@ else
 budgetApp.directive('price',price);
 budgetApp.directive('transactionInput',transactionInput);
 budgetApp.directive('transactionLatest',transactionLatest);
-budgetApp.directive('categoryInput',categoryInput);
-budgetApp.controller('budgetcontroller', ['$scope', '$filter', '$window', '$http','baseurl', Budget]);
+budgetApp.directive('categoryInput', categoryInput);
+budgetApp.directive('monthTransactions', monthTransactions);
+budgetApp.controller('budgetcontroller', ['$scope', '$filter', '$window', '$http', 'baseurl', Budget]);
 
 budgetApp.controller('navigationcontroller', ['$scope', function($scope){}]);
 

@@ -90,10 +90,20 @@ var transactionLatest= function () {
         }
     };
 };
-var categoryInput= function () {
+var categoryInput = function () {
     return {
         restrict: 'E', /* restrict this directive to elements */
         templateUrl: "Views/CategoryInput.html",
+        link: function (scope, elem, attrs) {
+
+        }
+    };
+};
+
+var monthTransactions = function () {
+    return {
+        restrict: 'E', /* restrict this directive to elements */
+        templateUrl: "Views/MonthTransactions.html",
         link: function (scope, elem, attrs) {
 
         }

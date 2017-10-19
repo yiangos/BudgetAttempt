@@ -1,0 +1,23 @@
+﻿<section id="MonthSection">
+    <h2 moment-picker="flowMonth" 
+                        start-date="startFlow" 
+                        locale="el"
+                        format="MMMM YYYY"
+                        ng-model-options="{ updateOn: 'blur' }"
+                        start-view="year"
+                        min-view="decade"
+                        max-view="month"
+                        max-date="maxFlow"
+                        min-date="minFlow"
+                        change="onFlowChange(newValue, oldValue)"
+        >{{flowMonth}}</h2>
+    <!--<input type="text"
+           name="fmonth"
+           ng-model="flowmonth"
+           required
+           
+           
+           id="flow" />
+    <label for="flow">Μήνας και έτος</label>-->
+
+</section>

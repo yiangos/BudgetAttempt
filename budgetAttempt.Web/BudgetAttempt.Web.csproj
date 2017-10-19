@@ -87,6 +87,7 @@
     <Content Include="HTML\views\LatestTransactions.html" />
     <Content Include="HTML\views\CategoryInput.html" />
     <Content Include="HTML\views\LineInput.html" />
+    <Content Include="HTML\views\MonthTransactions.html" />
     <Content Include="packages.config" />
     <Content Include="Assets\fonts\font-awesome\fontawesome-webfont.eot" />
     <Content Include="Assets\fonts\font-awesome\fontawesome-webfont.ttf" />

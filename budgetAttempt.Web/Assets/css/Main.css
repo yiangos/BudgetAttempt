@@ -7849,10 +7849,16 @@ body {
   background: #042133 url("http://i.ytimg.com/vi/NZlfxWMr7nc/maxresdefault.jpg") no-repeat center;
   background-size: cover;
   padding-top: 7rem; }
-
-body > header {
-  padding-top: 0.75rem;
-  background-color: rgba(4, 33, 51, 0.6); }
+  body > header {
+    padding-top: 0.75rem;
+    background-color: rgba(4, 33, 51, 0.6); }
+  body > .backtube-container,
+  body > .backtube-shield {
+    position: fixed;
+    bottom: auto;
+    right: auto;
+    width: 100vw;
+    height: 100vh; }
 
 section {
   position: relative;
@@ -7948,14 +7954,6 @@ div#backtube-player {
   position: absolute;
   left: 0;
   top: 0; }
-
-body > .backtube-container,
-body > .backtube-shield {
-  position: fixed;
-  bottom: auto;
-  right: auto;
-  width: 100vw;
-  height: 100vh; }
 
 .backtube-playbutton.backtube-init .backtube-container {
   width: 250px;

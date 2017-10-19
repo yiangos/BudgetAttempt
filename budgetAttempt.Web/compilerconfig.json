@@ -1,10 +1,6 @@
 ﻿[
-  {
-    "outputFile": "Assets/css/test.css",
-    "inputFile": "buildAssets/Styles/MaterialDesign/material.scss"
-  },
-  {
-    "outputFile": "Assets/css/Main.css",
-    "inputFile": "buildAssets/Styles/Main/Main.scss"
-  }
+    {
+      "inputFile": "buildAssets/Styles/Main/Main.scss",
+      "outputFile": "Assets/css/Main.css"
+    }
 ]

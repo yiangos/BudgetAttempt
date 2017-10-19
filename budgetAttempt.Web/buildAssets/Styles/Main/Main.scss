@@ -117,7 +117,7 @@ fieldset {
 
     textarea {
         resize: none;
-        height:4rem;
+        height: 4rem;
     }
 
     select {
@@ -551,19 +551,18 @@ button {
 
 
 
-    body {
-        @extend .container;
-        background: linear-gradient(darken($body-bg, 5%), darken($body-bg, 10%));
-        background: #042133 url('http://i.ytimg.com/vi/NZlfxWMr7nc/maxresdefault.jpg') no-repeat center;
-        background-size: cover;
-        padding-top: 7rem;
-    }
+body {
+    @extend .container;
+    background: linear-gradient(darken($body-bg, 5%), darken($body-bg, 10%));
+    background: #042133 url('http://i.ytimg.com/vi/NZlfxWMr7nc/maxresdefault.jpg') no-repeat center;
+    background-size: cover;
+    padding-top: 7rem;
 
-    body > main {
+    > main {
         @extend .row;
     }
 
-    body > header {
+    > header {
         @extend .navbar;
         @extend .navbar-inverse;
         @extend .navbar-fixed-top;
@@ -571,290 +570,290 @@ button {
         background-color: rgba(4,33,51,0.6);
     }
 
-    section {
-        @extend .col-lg-4;
-        position: relative;
-        background: $body-bg;
-        border-radius: 1px;
-        min-height: 60rem;
-        margin-bottom: 2.5rem;
-        margin-right: 0.75rem;
-        width: 32.125%;
-
-        &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            box-shadow: $shadow-8;
-            transform: scale(0.98);
-            transition: transform $mf-transition-speed ease-in-out;
-            z-index: -1;
-        }
-
-        &:hover::before {
-            transform: scale(1);
-        }
-
-        .full-width {
-            @extend .col-lg-12;
-        }
-
-        .column {
-            @extend .col-lg-6;
-        }
-
-        .button-container {
-            @extend .col-lg-12;
-            text-align: center;
-        }
-    }
-
-    #latestTransactionsSection {
-        ul {
-            list-style-type: none;
-        }
-    }
-
-    .lineExpense {
-        @extend .fa-tag;
-        color: darken($brand-warning, 25%);
-    }
-
-    .lineIncome {
-        @extend .fa-money;
-        color: darken($brand-success, 13.5%);
-    }
-
-    .lineExpense, .lineIncome {
-        padding: 1rem 0 0.5rem 0;
-
-        &::before {
-            font-family: 'FontAwesome';
-            float: left;
-            margin-top: 0;
-            margin-left: -3rem;
-        }
-    }
-
-    .lineExpense::before {
-        margin-left: -2.75rem;
-    }
-
-
-
-
-    $backtube-container: ( size: 900, ratio: '16/9', zindex: 1 ) !default;
-
-    $backtube-playbutton: ( zindex: 20, align: right bottom, position: absolute, dimension: 250px, circle: 90px, arrow-margin: -20px 0 0 -12px, arrow-dimensions: 20px 0 20px 35px ) !default;
-
-
-    @mixin backtube-object-cover ($settings) {
-        $ratio: map-get($settings, ratio);
-        $size: map-get($settings, size);
-
-        position: absolute;
-        top: 0;
-        left: 0;
+    > .backtube-container,
+    > .backtube-shield {
+        position: fixed;
+        bottom: auto;
+        right: auto;
         width: 100vw;
         height: 100vh;
-
-        @media (min-aspect-ratio: unquote($ratio)) {
-            height: #{$size}vh;
-            top: -#{($size - 100) / 2}vh;
-        }
-
-        @media (max-aspect-ratio: unquote($ratio)) {
-            width: #{$size}vw;
-            left: -#{($size - 100) / 2}vw;
-        }
     }
+}
 
-    @mixin backtube-position($settings) {
-        $dimension: map-get($settings, dimension);
-        $align: map-get($settings, align);
+section {
+    @extend .col-lg-4;
+    position: relative;
+    background: $body-bg;
+    border-radius: 1px;
+    min-height: 60rem;
+    margin-bottom: 2.5rem;
+    margin-right: 0.75rem;
+    width: 32.125%;
 
-        width: $dimension;
-        height: $dimension;
-        z-index: map-get($settings, zindex);
-
-        @if index($align, right) {
-            left: auto;
-            margin-right: ($dimension / -2);
-        }
-        @else {
-            right: auto;
-            margin-left: ($dimension / -2);
-        }
-
-        @if index($align, bottom) {
-            top: auto;
-            margin-bottom: ($dimension / -2);
-        }
-        @else {
-            bottom: auto;
-            margin-top: ($dimension / -2);
-        }
-
-        @each $pos in $align {
-            @if index(top right bottom left, $pos) {
-                #{$pos}: $dimension / 2;
-            }
-        }
-
-        @if $align == center {
-            top: 50%;
-            left: 50%;
-        }
-        @else if $align == 'center center' {
-            top: 50%;
-            left: 50%;
-        }
-        @else if index($align, center) {
-            @each $pos in $align {
-                @if index(left right, $pos) {
-                    top: 50%;
-                }
-
-                @if index(top bottom, $pos) {
-                    left: 50%;
-                }
-            }
-        }
-    }
-
-    @mixin backtube-playbutton($settings) {
-        $circle: map-get($settings, circle);
-        $arrow: map-get($settings, arrow);
-
-        @include backtube-position($settings);
-
-        &:before,
-        &:after {
-            content: '';
-            position: absolute;
-            display: block;
-            cursor: pointer;
-            left: 50%;
-            top: 50%;
-            z-index: -1;
-        }
-
-        &:before {
-            margin: ($circle / -2) 0 0 ($circle / -2);
-            height: $circle;
-            width: $circle;
-            border: 3px solid #fff;
-            background: rgba(#000, 0.2);
-            border-radius: $circle;
-            box-shadow: 0 3px 4px 0 rgba(#000, 0.14), 0 3px 3px -2px rgba(#000, 0.2), 0 1px 8px 0 rgba(#000, 0.12);
-            transition: all 0.1s ease;
-        }
-
-        &:active:before {
-            background: rgba(#000, 0.6);
-            box-shadow: 0 0 1px rgba(#000, 0);
-        }
-
-        &:after {
-            margin: map-get($settings, arrow-margin);
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: map-get($settings, arrow-dimensions);
-            border-color: transparent transparent transparent #fff;
-        }
-    }
-
-    .backtube-wrapper {
-        body & {
-            position: relative;
-            z-index: (map-get($backtube-container, zindex) + 2);
-            height: 100vh;
-            overflow-x: hidden;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-    }
-
-    .backtube-container {
-        overflow: hidden;
+    &::before {
+        content: '';
         position: absolute;
         top: 0;
+        left: 0;
         right: 0;
         bottom: 0;
-        left: 0;
-        z-index: map-get($backtube-container, zindex);
-        opacity: 1;
-        transition: opacity 0.4s ease;
+        box-shadow: $shadow-8;
+        transform: scale(0.98);
+        transition: transform $mf-transition-speed ease-in-out;
+        z-index: -1;
+    }
 
-        &.backtube-fade-in {
-            opacity: 0.01;
-            transition-duration: 0s;
-        }
+    &:hover::before {
+        transform: scale(1);
+    }
 
-        &.backtube-fade-out {
-            transition-duration: 1s;
-            opacity: 0.01;
+    .full-width {
+        @extend .col-lg-12;
+    }
+
+    .column {
+        @extend .col-lg-6;
+    }
+
+    .button-container {
+        @extend .col-lg-12;
+        text-align: center;
+    }
+}
+
+#latestTransactionsSection {
+    ul {
+        list-style-type: none;
+    }
+}
+
+.lineExpense {
+    @extend .fa-tag;
+    color: darken($brand-warning, 25%);
+}
+
+.lineIncome {
+    @extend .fa-money;
+    color: darken($brand-success, 13.5%);
+}
+
+.lineExpense, .lineIncome {
+    padding: 1rem 0 0.5rem 0;
+
+    &::before {
+        font-family: 'FontAwesome';
+        float: left;
+        margin-top: 0;
+        margin-left: -3rem;
+    }
+}
+
+.lineExpense::before {
+    margin-left: -2.75rem;
+}
+
+
+
+
+$backtube-container: ( size: 900, ratio: '16/9', zindex: 1 ) !default;
+
+$backtube-playbutton: ( zindex: 20, align: right bottom, position: absolute, dimension: 250px, circle: 90px, arrow-margin: -20px 0 0 -12px, arrow-dimensions: 20px 0 20px 35px ) !default;
+
+
+@mixin backtube-object-cover ($settings) {
+    $ratio: map-get($settings, ratio);
+    $size: map-get($settings, size);
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    @media (min-aspect-ratio: unquote($ratio)) {
+        height: #{$size}vh;
+        top: -#{($size - 100) / 2}vh;
+    }
+
+    @media (max-aspect-ratio: unquote($ratio)) {
+        width: #{$size}vw;
+        left: -#{($size - 100) / 2}vw;
+    }
+}
+
+@mixin backtube-position($settings) {
+    $dimension: map-get($settings, dimension);
+    $align: map-get($settings, align);
+
+    width: $dimension;
+    height: $dimension;
+    z-index: map-get($settings, zindex);
+
+    @if index($align, right) {
+        left: auto;
+        margin-right: ($dimension / -2);
+    }
+    @else {
+        right: auto;
+        margin-left: ($dimension / -2);
+    }
+
+    @if index($align, bottom) {
+        top: auto;
+        margin-bottom: ($dimension / -2);
+    }
+    @else {
+        bottom: auto;
+        margin-top: ($dimension / -2);
+    }
+
+    @each $pos in $align {
+        @if index(top right bottom left, $pos) {
+            #{$pos}: $dimension / 2;
         }
     }
 
-    div#backtube-player {
+    @if $align == center {
+        top: 50%;
+        left: 50%;
+    }
+    @else if $align == 'center center' {
+        top: 50%;
+        left: 50%;
+    }
+    @else if index($align, center) {
+        @each $pos in $align {
+            @if index(left right, $pos) {
+                top: 50%;
+            }
+
+            @if index(top bottom, $pos) {
+                left: 50%;
+            }
+        }
+    }
+}
+
+@mixin backtube-playbutton($settings) {
+    $circle: map-get($settings, circle);
+    $arrow: map-get($settings, arrow);
+
+    @include backtube-position($settings);
+
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+        display: block;
+        cursor: pointer;
+        left: 50%;
+        top: 50%;
+        z-index: -1;
+    }
+
+    &:before {
+        margin: ($circle / -2) 0 0 ($circle / -2);
+        height: $circle;
+        width: $circle;
+        border: 3px solid #fff;
+        background: rgba(#000, 0.2);
+        border-radius: $circle;
+        box-shadow: 0 3px 4px 0 rgba(#000, 0.14), 0 3px 3px -2px rgba(#000, 0.2), 0 1px 8px 0 rgba(#000, 0.12);
+        transition: all 0.1s ease;
+    }
+
+    &:active:before {
+        background: rgba(#000, 0.6);
+        box-shadow: 0 0 1px rgba(#000, 0);
+    }
+
+    &:after {
+        margin: map-get($settings, arrow-margin);
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: map-get($settings, arrow-dimensions);
+        border-color: transparent transparent transparent #fff;
+    }
+}
+
+.backtube-wrapper {
+    body & {
+        position: relative;
+        z-index: (map-get($backtube-container, zindex) + 2);
+        height: 100vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+.backtube-container {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: map-get($backtube-container, zindex);
+    opacity: 1;
+    transition: opacity 0.4s ease;
+
+    &.backtube-fade-in {
+        opacity: 0.01;
+        transition-duration: 0s;
+    }
+
+    &.backtube-fade-out {
+        transition-duration: 1s;
+        opacity: 0.01;
+    }
+}
+
+div#backtube-player {
+    display: none;
+}
+
+#backtube-player {
+    @include backtube-object-cover($backtube-container);
+}
+
+.backtube-shield {
+    width: 100vw;
+    height: 100vh;
+    z-index: (map-get($backtube-container, zindex) + 1);
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+
+.backtube-playbutton.backtube-init {
+    .backtube-container {
+        @include backtube-playbutton($backtube-playbutton);
+        position: absolute;
+        opacity: 1;
+    }
+
+    > .backtube-container {
+        position: fixed;
+    }
+
+    .backtube-shield {
         display: none;
     }
 
     #backtube-player {
-        @include backtube-object-cover($backtube-container);
+        opacity: 0.001;
+    }
+}
+// If the plugin get's called on body, use different z-indexes
+.backtube-body {
+    .backtube-container {
+        z-index: -2;
     }
 
     .backtube-shield {
-        width: 100vw;
-        height: 100vh;
-        z-index: (map-get($backtube-container, zindex) + 1);
-        position: absolute;
-        left: 0;
-        top: 0;
+        z-index: -1;
     }
-
-    body {
-        > .backtube-container,
-        > .backtube-shield {
-            position: fixed;
-            bottom: auto;
-            right: auto;
-            width: 100vw;
-            height: 100vh;
-        }
-    }
-
-    .backtube-playbutton.backtube-init {
-        .backtube-container {
-            @include backtube-playbutton($backtube-playbutton);
-            position: absolute;
-            opacity: 1;
-        }
-
-        > .backtube-container {
-            position: fixed;
-        }
-
-        .backtube-shield {
-            display: none;
-        }
-
-        #backtube-player {
-            opacity: 0.001;
-        }
-    }
-    // If the plugin get's called on body, use different z-indexes
-    .backtube-body {
-        .backtube-container {
-            z-index: -2;
-        }
-
-        .backtube-shield {
-            z-index: -1;
-        }
-    }
+}
