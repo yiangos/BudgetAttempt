@@ -88,12 +88,12 @@ namespace BudgetAttempt.API
 
         private IEnumerable<Models.Transaction> GetMonthTransactions(string yearmonth)
         {
-            var d= DateTime.ParseExact(yearmonth + "-01", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);
+            var d= DateTime.ParseExact(yearmonth + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);
             var filter = new BudgetAttempt.Finance.Models.Filter()
             {
 
                 StartDate = d,
-                EndDate =d.AddMonths(1).AddDays(-1),
+                EndDate =d.AddMonths(1).AddSeconds(-1),
             };
             return Mapper.Map<IEnumerable<Models.Transaction>>(_FinanceRepository.FetchFiltered(filter));
         }
